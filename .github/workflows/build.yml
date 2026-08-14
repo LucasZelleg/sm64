@@ -6,19 +6,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: |
-          sudo apt update
-          sudo apt install -y build-essential git crossbuild-essential-arm64 libsdl2-dev:arm64
+          sudo apt-get update
+          sudo apt-get install -y build-essential git crossbuild-essential-arm64 libsdl2-dev:arm64
 
       - name: Build Game
         run: |
           make VERSION=eu GRAPHICS=gles2 WINDOW_BACKEND=sdl2 HIGH_FPS=1 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sm64-r36s-vanilla
           path: build/eu_pc/sm64.eu
