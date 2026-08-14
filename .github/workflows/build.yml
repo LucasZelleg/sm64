@@ -1,0 +1,24 @@
+name: Build SM64 Vanilla for R36S
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential git crossbuild-essential-arm64 libsdl2-dev:arm64
+
+      - name: Build Game
+        run: |
+          make VERSION=eu GRAPHICS=gles2 WINDOW_BACKEND=sdl2 HIGH_FPS=1 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sm64-r36s-vanilla
+          path: build/eu_pc/sm64.eu
