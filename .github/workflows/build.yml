@@ -4,18 +4,14 @@ on: [workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure APT and Install Dependencies
+      - name: Install dependencies
         run: |
-          sudo dpkg --add-architecture arm64
-          sudo sed -i 's/deb http/deb [arch=amd64,i386] http/g' /etc/apt/sources.list
-          echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update
-          sudo apt-get install -y build-essential git crossbuild-essential-arm64 libsdl2-dev:arm64 gcc-mips-linux-gnu
+          sudo apt-get install -y build-essential git gcc-aarch64-linux-gnu g++-aarch64-linux-gnu gcc-mips-linux-gnu libsdl2-dev
 
       - name: Build Game
         run: |
