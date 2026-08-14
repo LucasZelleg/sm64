@@ -11,11 +11,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential git gcc-aarch64-linux-gnu g++-aarch64-linux-gnu gcc-mips-linux-gnu libsdl2-dev
+          sudo apt-get install -y build-essential git gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libsdl2-dev:arm64 || sudo apt-get install -y build-essential git gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libsdl2-dev
 
       - name: Build Game
         run: |
-          make VERSION=eu GRAPHICS=gles2 WINDOW_BACKEND=sdl2 HIGH_FPS=1 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+          make VERSION=eu TARGET_N64=0 GRAPHICS=gles2 WINDOW_BACKEND=sdl2 HIGH_FPS=1 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
