@@ -21,4 +21,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sm64-r36s-vanilla
-          path: build/eu_pc/sm64.eu*
+          path: build/
